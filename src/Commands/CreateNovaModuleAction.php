@@ -62,7 +62,7 @@ class CreateNovaModuleAction extends Command
 
         $NameSpace = 'App\\Nova\\Modules\\' . $this->name . '\\Actions';
 
-        $stub = file_get_contents('/../../resources/stubs/action.stub');
+        $stub = file_get_contents(__DIR__ .'/../../resources/stubs/action.stub');
         $stub = str_replace('{{ namespace }}', $NameSpace, $stub);
         $stub = str_replace('{{ class }}', $this->resource, $stub);
         $ResourceToCreate = $ResourcePath . '/' . $this->resource . '.php';
