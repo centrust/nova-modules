@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class CreateNovaModulePolicy extends Command
+class CreateNovaModulePolicy extends ModuleCommandAbstract
 {
     /**
      * The name and signature of the console command.
@@ -60,7 +60,7 @@ class CreateNovaModulePolicy extends Command
 
         $NameSpace = 'App\\Nova\\Modules\\' . $this->name . '\\Policies';
 
-        $stub = file_get_contents($this->basePath('/../resources/stubs/action.stub'));
+        $stub = file_get_contents('/../../resources/stubs/policy.stub');
         $stub = str_replace('{{ user }}', 'User', $stub);
         $stub = str_replace('{{ namespace }}', $NameSpace, $stub);
         $stub = str_replace('{{ class }}', $this->resource, $stub);
