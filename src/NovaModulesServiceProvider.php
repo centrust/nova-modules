@@ -3,6 +3,8 @@
 namespace Centrust\NovaModules;
 
 use Centrust\NovaModules\Commands\CreateNovaModuleAction;
+use Centrust\NovaModules\Commands\CreateNovaModulePolicy;
+use Centrust\NovaModules\Commands\CreateNovaModuleResource;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Centrust\NovaModules\Commands\NovaModulesCommand;
@@ -19,6 +21,11 @@ class NovaModulesServiceProvider extends PackageServiceProvider
         $package
             ->name('nova-modules')
             ->hasConfigFile()
-            ->hasCommands([NovaModulesCommand::class,CreateNovaModuleAction::class]);
+            ->hasCommands([
+                NovaModulesCommand::class,
+                CreateNovaModuleAction::class,
+                CreateNovaModuleResource::class,
+                CreateNovaModulePolicy::class,
+                ]);
     }
 }
