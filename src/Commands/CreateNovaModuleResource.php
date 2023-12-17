@@ -71,7 +71,7 @@ class CreateNovaModuleResource extends Command
 
         $NameSpace = 'App\\Nova\\Modules\\' . $this->name . '\\Resources';
 
-        $stub = file_get_contents($this->package->basePath('/../resources/stubs/resource.stub'));
+        $stub = file_get_contents($this->basePath('/../resources/stubs/resource.stub'));
         $stub = str_replace('{{ namespace }}', $NameSpace, $stub);
         $stub = str_replace('{{ class }}', $this->resource, $stub);
         $stub = str_replace('{{ namespacedModel }}', 'App\\Models\\' . $this->model, $stub);

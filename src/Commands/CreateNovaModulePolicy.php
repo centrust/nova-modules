@@ -60,7 +60,7 @@ class CreateNovaModulePolicy extends Command
 
         $NameSpace = 'App\\Nova\\Modules\\' . $this->name . '\\Policies';
 
-        $stub = file_get_contents($this->package->basePath('/../resources/stubs/action.stub'));
+        $stub = file_get_contents($this->basePath('/../resources/stubs/action.stub'));
         $stub = str_replace('{{ user }}', 'User', $stub);
         $stub = str_replace('{{ namespace }}', $NameSpace, $stub);
         $stub = str_replace('{{ class }}', $this->resource, $stub);
