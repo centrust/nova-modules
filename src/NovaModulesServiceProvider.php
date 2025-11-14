@@ -3,6 +3,7 @@
 namespace Centrust\NovaModules;
 
 use Centrust\NovaModules\Commands\CreateNovaModuleAction;
+use Centrust\NovaModules\Commands\CreateNovaModuleNovaPolicy;
 use Centrust\NovaModules\Commands\CreateNovaModulePolicy;
 use Centrust\NovaModules\Commands\CreateNovaModuleResource;
 use Spatie\LaravelPackageTools\Package;
@@ -26,6 +27,7 @@ class NovaModulesServiceProvider extends PackageServiceProvider
                 CreateNovaModuleAction::class,
                 CreateNovaModuleResource::class,
                 CreateNovaModulePolicy::class,
+                CreateNovaModuleNovaPolicy::class,
                 ]);
     }
 }
