@@ -1,19 +1,11 @@
-# Nova Modular Architrchter
+# Laravel Nova Modular Architecture
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/centrust/nova-modules.svg?style=flat-square)](https://packagist.org/packages/centrust/nova-modules)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/centrust/nova-modules/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/centrust/nova-modules/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/centrust/nova-modules/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/centrust/nova-modules/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/centrust/nova-modules.svg?style=flat-square)](https://packagist.org/packages/centrust/nova-modules)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/nova-modules.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/nova-modules)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+This package provides a modular architecture for Laravel Nova, allowing you to organize your Nova resources, actions, policies, and more into dedicated modules. It helps keep your `app/Nova` directory clean and improves code maintainability by grouping related functionality.
 
 ## Installation
 
@@ -23,38 +15,73 @@ You can install the package via composer:
 composer require centrust/nova-modules
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="nova-modules-migrations"
-php artisan migrate
-```
-
 You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="nova-modules-config"
 ```
 
-This is the contents of the published config file:
+## Module Architecture
 
-```php
-return [
-];
-```
+The package organizes modules under the `app/Nova/Modules` directory. Each module has its own subdirectory containing its specific components:
 
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="nova-modules-views"
+```text
+app/Nova/Modules/
+└── YourModuleName/
+    ├── Actions/
+    ├── Enums/
+    ├── Filters/
+    ├── Lenses/
+    ├── Metrics/
+    ├── Policies/
+    ├── Resources/
+    ├── Rules/
+    └── Services/
 ```
 
 ## Usage
 
-```php
-$novaModules = new Centrust\NovaModules();
-echo $novaModules->echoPhrase('Hello, Centrust!');
+The package provides several Artisan commands to generate modules and their components.
+
+### Create a New Module
+
+To create the directory structure for a new module:
+
+```bash
+php artisan module:create
 ```
+This command will ask for the module name and generate the standard directory structure.
+
+### Generate Module Components
+
+You can generate specific components within a module using the following commands:
+
+#### Create a Resource
+```bash
+php artisan module:resource
+```
+Prompts for: Module name, Resource name, and Model name.
+
+#### Create an Action
+```bash
+php artisan module:action
+```
+Prompts for: Module name and Action name.
+
+#### Create a Policy
+```bash
+php artisan module:policy
+```
+Prompts for: Module name, Policy name, and Model name. This generates a standard Laravel policy that applies to the Eloquent Model.
+
+#### Create a Nova Policy
+```bash
+php artisan module:nova-policy
+```
+Prompts for: Module name, Policy name, and Resource class.
+This generates a Nova-specific policy where the resource itself
+is passed instead of the Model. This is specifically useful for Nova V5
+where policies can be directly applied to resources. Like :   public static $policy =<nova-ploicy::class>; inside the nova resource
 
 ## Testing
 
