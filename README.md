@@ -81,7 +81,7 @@ php artisan module:nova-policy
 Prompts for: Module name, Policy name, and Resource class.
 This generates a Nova-specific policy where the resource itself
 is passed instead of the Model. This is specifically useful for Nova V5
-where policies can be directly applied to resources. Like :   public static $policy =<nova-ploicy::class>; inside the nova resource
+where policies can be directly applied to resources. Like: public static $policy =<nova-policy::class>; inside the nova resource
 
 ## Testing
 
