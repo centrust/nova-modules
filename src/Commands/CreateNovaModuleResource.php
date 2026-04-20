@@ -13,7 +13,7 @@ class CreateNovaModuleResource extends Command
      *
      * @var string
      */
-    protected $signature = 'module:resource';
+    protected $signature = 'module:resource {name?} {resource?} {model?}';
 
     /**
      * The console command description.
@@ -30,9 +30,9 @@ class CreateNovaModuleResource extends Command
      */
     public function handle()
     {
-        $this->name = $this->ask('Module name?');
-        $this->resource = $this->ask('Resource name?');
-        $this->model = $this->ask('Resource model?');
+        $this->name = $this->argument('name') ?: $this->ask('Module name?');
+        $this->resource = $this->argument('resource') ?: $this->ask('Resource name?');
+        $this->model = $this->argument('model') ?: $this->ask('Resource model?');
 
 
         $this->generatePackageDirectories();

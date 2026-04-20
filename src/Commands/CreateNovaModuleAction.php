@@ -12,7 +12,7 @@ class CreateNovaModuleAction extends Command
      *
      * @var string
      */
-    protected $signature = 'module:action';
+    protected $signature = 'module:action {name?} {resource?}';
 
     /**
      * The console command description.
@@ -26,8 +26,8 @@ class CreateNovaModuleAction extends Command
      */
     public function handle()
     {
-        $this->name = $this->ask('Module name?');
-        $this->resource = $this->ask('Action name?');
+        $this->name = $this->argument('name') ?: $this->ask('Module name?');
+        $this->resource = $this->argument('resource') ?: $this->ask('Action name?');
      //   $this->model = $this->ask('Resource model?');
 
 

@@ -48,9 +48,9 @@ The package provides several Artisan commands to generate modules and their comp
 To create the directory structure for a new module:
 
 ```bash
-php artisan module:create
+php artisan module:create {name?}
 ```
-This command will ask for the module name and generate the standard directory structure.
+This command will ask for the module name (if not provided) and generate the standard directory structure.
 
 ### Generate Module Components
 
@@ -58,27 +58,27 @@ You can generate specific components within a module using the following command
 
 #### Create a Resource
 ```bash
-php artisan module:resource
+php artisan module:resource {module?} {resource?} {model?}
 ```
-Prompts for: Module name, Resource name, and Model name.
+Prompts for (if not provided): Module name, Resource name, and Model name.
 
 #### Create an Action
 ```bash
-php artisan module:action
+php artisan module:action {module?} {action?}
 ```
-Prompts for: Module name and Action name.
+Prompts for (if not provided): Module name and Action name.
 
 #### Create a Policy
 ```bash
-php artisan module:policy
+php artisan module:policy {module?} {policy?} {model?}
 ```
-Prompts for: Module name, Policy name, and Model name. This generates a standard Laravel policy that applies to the Eloquent Model.
+Prompts for (if not provided): Module name, Policy name, and Model name. This generates a standard Laravel policy that applies to the Eloquent Model.
 
 #### Create a Nova Policy
 ```bash
-php artisan module:nova-policy
+php artisan module:nova-policy {module?} {policy?} {resource?}
 ```
-Prompts for: Module name, Policy name, and Resource class.
+Prompts for (if not provided): Module name, Policy name, and Resource class.
 This generates a Nova-specific policy where the resource itself
 is passed instead of the Model. This is specifically useful for Nova V5
 where policies can be directly applied to resources. Like: public static $policy =<nova-policy::class>; inside the nova resource

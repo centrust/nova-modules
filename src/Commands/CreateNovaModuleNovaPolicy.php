@@ -13,7 +13,7 @@ class CreateNovaModuleNovaPolicy extends Command
      *
      * @var string
      */
-    protected $signature = 'module:nova-policy';
+    protected $signature = 'module:nova-policy {name?} {resource?} {model?}';
 
     /**
      * The console command description.
@@ -24,9 +24,9 @@ class CreateNovaModuleNovaPolicy extends Command
 
     public function handle()
     {
-        $this->name = $this->ask('Module name?');
-        $this->resource = $this->ask('Policy name?');
-        $this->model = $this->ask('Resource class?');
+        $this->name = $this->argument('name') ?: $this->ask('Module name?');
+        $this->resource = $this->argument('resource') ?: $this->ask('Policy name?');
+        $this->model = $this->argument('model') ?: $this->ask('Resource class?');
 
 
         $this->generatePackageDirectories();

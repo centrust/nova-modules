@@ -13,7 +13,7 @@ class NovaModulesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'module:create';
+    protected $signature = 'module:create {name?}';
 
     /**
      * The console command description.
@@ -27,7 +27,7 @@ class NovaModulesCommand extends Command
      */
     public function handle()
     {
-        $this->name = $this->ask('What is Module name?');
+        $this->name = $this->argument('name') ?: $this->ask('What is Module name?');
 
         $this->generatePackageDirectories();
 
