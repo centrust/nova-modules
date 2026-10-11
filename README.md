@@ -83,6 +83,18 @@ This generates a Nova-specific policy where the resource itself
 is passed instead of the Model. This is specifically useful for Nova V5
 where policies can be directly applied to resources. Like: public static $policy =<nova-policy::class>; inside the nova resource
 
+## Laravel Boost Skill
+
+This package includes the `nova-modules-development` skill in `resources/boost/skills` to help AI agents generate and work with module resources, actions, and policies.
+
+In a consuming application with Laravel Boost installed, run:
+
+```bash
+php artisan boost:install
+```
+
+Select skills during installation and enable this package's skill when prompted. Boost installs package skills according to your preferences; no additional service provider configuration is needed.
+
 ## Testing
 
 ```bash
