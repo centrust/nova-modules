@@ -68,6 +68,19 @@ php artisan module:action {module?} {action?}
 ```
 Prompts for (if not provided): Module name and Action name.
 
+#### Create a Filter
+```bash
+php artisan module:filter {name?} {resource?}
+```
+Prompts for (if not provided): Module name and Filter name. Generates a select filter in `app/Nova/Modules/{name}/Filters`.
+
+Use `--boolean` or `--date` to generate a boolean or date filter using its own stub:
+```bash
+php artisan module:filter Sales OrderStatusFilter --boolean
+php artisan module:filter Sales CreatedAfterFilter --date
+```
+The options cannot be used together. Without either option, the default remains a select filter.
+
 #### Create a Policy
 ```bash
 php artisan module:policy {module?} {policy?} {model?}

@@ -1,6 +1,6 @@
 ---
 name: nova-modules-development
-description: Build modular Laravel Nova features with centrust/nova-modules. Use when creating or modifying Nova modules, resources, actions, model policies, or Nova resource policies under app/Nova/Modules.
+description: Build modular Laravel Nova features with centrust/nova-modules. Use when creating or modifying Nova modules, resources, actions, filters, model policies, or Nova resource policies under app/Nova/Modules.
 ---
 
 # Nova Modules Development
@@ -26,7 +26,7 @@ app/Nova/Modules/Sales/
 └── Services/
 ```
 
-The package scaffolds directories and classes; it does not implement domain logic or automatically register resources or policies. Its published `nova-modules` configuration is currently empty; do not invent configuration keys or facade methods.
+The package scaffolds directories and classes; it does not implement domain logic or automatically register resources, filters, or policies. Its published `nova-modules` configuration is currently empty; do not invent configuration keys or facade methods.
 
 ## Generate components
 
@@ -36,6 +36,9 @@ Run these commands from the consuming Laravel application, supplying every posit
 php artisan module:create Sales
 php artisan module:resource Sales Order Order
 php artisan module:action Sales ApproveOrder
+php artisan module:filter Sales OrderStatus
+php artisan module:filter Sales OrderFlags --boolean
+php artisan module:filter Sales CreatedAfter --date
 php artisan module:policy Sales OrderPolicy Order
 php artisan module:nova-policy Sales OrderNovaPolicy Order
 ```
@@ -45,12 +48,13 @@ php artisan module:nova-policy Sales OrderNovaPolicy Order
 | `module:create` | Module name | All module directories |
 | `module:resource` | Module, resource class, model name | `Resources/{Resource}.php` |
 | `module:action` | Module, action class | `Actions/{Action}.php` |
+| `module:filter` | Module, filter class | `Filters/{Filter}.php` |
 | `module:policy` | Module, policy class, model name | `Policies/{Policy}.php` |
 | `module:nova-policy` | Module, policy class, resource class | `Policies/{Policy}.php` |
 
-Generators create their required module subdirectories. There are no package generators for filters, metrics, lenses, rules, services, or enums; follow existing application patterns when adding these.
+Generators create their required module subdirectories. There are no package generators for metrics, lenses, rules, services, or enums; follow existing application patterns when adding these.
 
-Inspect the destination before generating: existing-file checks do not reliably protect `.php` files from being overwritten. Edit existing classes instead of regenerating them.
+Inspect the destination before generating: `module:filter` refuses to overwrite an existing filter's `.php` file, but other generators' existing-file checks do not reliably protect `.php` files from being overwritten. Edit existing classes instead of regenerating them.
 
 ## Resources and actions
 
@@ -75,6 +79,23 @@ Inspect the application's Nova service provider and existing discovery conventio
 \Laravel\Nova\Nova::resources([
     \App\Nova\Modules\Sales\Resources\Order::class,
 ]);
+```
+
+## Filters
+
+Use `module:filter {name?} {resource?}` with the module name and filter class name. Missing arguments prompt for the module and filter names. Without options, it generates a select filter extending `Laravel\Nova\Filters\Filter`. Use `--boolean` for `BooleanFilter` or `--date` for `DateFilter`; each variant has its own stub. The options cannot be used together.
+
+Implement query constraints in `apply(NovaRequest $request, $query, $value)`; the generated stubs return the query without filtering it. Define selectable labels and values in `options(NovaRequest $request)` for select and boolean filters. Boolean filters receive an array of selected option values; date filters parse the supplied value with `Carbon::parse($value)` and do not define an `options` method.
+
+Attach filters through the resource's `filters(NovaRequest $request)` method:
+
+```php
+use App\Nova\Modules\Sales\Filters\OrderStatus;
+
+public function filters(NovaRequest $request): array
+{
+    return [new OrderStatus];
+}
 ```
 
 ## Choose and wire policies
@@ -107,6 +128,7 @@ Keep model policy and resource policy signatures distinct; do not replace a reso
 ## Verification checklist
 
 - Confirm generated file paths, namespaces, model imports, and the application's base Nova resource exist.
-- Confirm module resources are registered and actions appear on the intended resources.
+- Confirm module resources are registered and actions and filters appear on the intended resources.
+- Test filter query behavior for select values, selected and unselected boolean options, and date boundaries as applicable.
 - Test both allowed and denied authorization paths, including the correct argument type for each policy.
 - Follow the application's existing test conventions and run targeted tests for the behavior changed.

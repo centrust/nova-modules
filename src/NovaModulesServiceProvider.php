@@ -3,6 +3,7 @@
 namespace Centrust\NovaModules;
 
 use Centrust\NovaModules\Commands\CreateNovaModuleAction;
+use Centrust\NovaModules\Commands\CreateNovaModuleFilter;
 use Centrust\NovaModules\Commands\CreateNovaModuleNovaPolicy;
 use Centrust\NovaModules\Commands\CreateNovaModulePolicy;
 use Centrust\NovaModules\Commands\CreateNovaModuleResource;
@@ -25,6 +26,7 @@ class NovaModulesServiceProvider extends PackageServiceProvider
             ->hasCommands([
                 NovaModulesCommand::class,
                 CreateNovaModuleAction::class,
+                CreateNovaModuleFilter::class,
                 CreateNovaModuleResource::class,
                 CreateNovaModulePolicy::class,
                 CreateNovaModuleNovaPolicy::class,
